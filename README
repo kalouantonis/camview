@@ -21,6 +21,3 @@ Running:
 	need to forward that port if you're running the server behind a router.
 
 	* Only two clients are currently supported.
-
-	* Both clients should have unique network addresses. You may run the
-	client on the same machine that you run the server.
