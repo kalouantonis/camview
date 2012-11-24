@@ -1,4 +1,4 @@
-camview is a simple two-client camera viewing program.
+camview is a simple network camera viewing program.
 
 Requirements:
 	* OpenCV
@@ -15,7 +15,7 @@ Installation:
 Running:
 	* Run camserv like so: ``camserv [port-number]''.
 
-	* Run camview like so: ``camview host-ip [port-number]''.
+	* Run camview like so: ``camview host-address [port-number]''.
 
 	* The default port number used by the program is 1234 (UDP). You may
 	need to forward that port if you're running the server behind a router.
@@ -24,6 +24,3 @@ Running:
 
 	* Both clients should have unique network addresses. You may run the
 	client on the same machine that you run the server.
-
-License:
-	* See LICENSE.
