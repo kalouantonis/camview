@@ -136,12 +136,8 @@ int main(int argc, char *argv[])
 		warn("%s", net_geterror());
 		return EXIT_FAILURE;
 	}
-	if (init(&ldata)) {
-		r = EXIT_FAILURE;
-		goto out;
-	}
-	r = mainloop(&ldata) ? EXIT_FAILURE : 0;
-out:
+	r = init(&ldata) ? EXIT_FAILURE :
+		mainloop(&ldata) ? EXIT_FAILURE : 0;
 	cleanup(&ldata);
 	net_cleanup();
 	return r;
