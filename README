@@ -1,0 +1,29 @@
+camview is a simple two-client camera viewing program.
+
+Requirements:
+	* OpenCV
+
+Installation:
+	* Modify config.h to suit your preferences.
+
+	* Run ``make camview'' to build the client.
+
+	* Run ``make camserv'' to build the server.
+
+	* Copy the binaries and images to the directories you want.
+
+Running:
+	* Run camserv like so: ``camserv [port-number]''.
+
+	* Run camview like so: ``camview host-ip [port-number]''.
+
+	* The default port number used by the program is 1234 (UDP). You may
+	need to forward that port if you're running the server behind a router.
+
+	* Only two clients are currently supported.
+
+	* Both clients should have unique network addresses. You may run the
+	client on the same machine that you run the server.
+
+License:
+	* See LICENSE.
