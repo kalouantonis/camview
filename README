@@ -1,7 +1,7 @@
 camview is a simple network camera viewing program.
 
 Requirements:
-	* OpenCV
+	* OpenCV (http://opencv.org)
 
 Installation:
 	* Modify config.h to suit your preferences.
