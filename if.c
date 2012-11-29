@@ -71,8 +71,8 @@ void *if_fpack(const if_frame *frame, size_t *len)
 
 if_frame *if_funpack(const void *buf, size_t n)
 {
-	IplImage *r;
-	CvMat *mat;
+	if_frame *r;
+	if_mat *mat;
 	void *tmp;
 
 	if (!(tmp = malloc(n)))

@@ -12,13 +12,13 @@ CLI_OBJ := \
        if.o	\
        net.o
 
-all: camview camserv
+all: camview camserv 
 
 camview: $(CLI_OBJ)
 	$(CC) -o $@ $(CLI_OBJ) $(CLI_LIBS)
 
 camserv: $(SRV_OBJ)
 	$(CC) -o $@ $(SRV_OBJ) $(SRV_LIBS)
-
+	
 clean:
-	$(RM) $(CLI_OBJ) $(SRV_OBJ) camview camserv
+	$(RM) $(CLI_OBJ) $(SRV_OBJ) $(MTN_OBJ) camview camserv

@@ -5,13 +5,15 @@
 #include <stddef.h>
 #include <cv.h>
 #include <highgui.h>
+#include <cxcore.h>
 
 typedef CvCapture if_cam;
 typedef IplImage if_frame;
 typedef char if_window;
+typedef CvMat if_mat;
 
 extern if_cam *if_caminit(void);
-extern if_frame *if_camquery(if_cam *handle, int width, int height);
+extern if_frame *if_camquery(if_cam *handle, int width, int height); /* Use for capture from frame*/
 extern void if_camrelease(if_cam *handle);
 
 extern if_window *if_winit(const char *title, int width, int height);
@@ -25,5 +27,4 @@ extern void if_frelease(if_frame *frame);
 
 extern void if_delay(int ms);
 extern int if_keystroke(void);
-
 #endif

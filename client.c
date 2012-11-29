@@ -54,6 +54,8 @@ struct ldata {
 	if_window *wlocal;
 	if_frame *fpending;
 	if_frame *fnc;
+	if_mat *curr_img; /* Create the 2 comperative images*/
+	if_mat *prev_img;
 };
 
 static int init(struct ldata *lp)
@@ -74,6 +76,13 @@ static int init(struct ldata *lp)
 		warn("unable to load image: %s\n", PENDING_FILE);
 	if (!(lp->fnc = if_fload(IMAGE_PATH NO_CONNECT_FILE)))
 		warn("unable to load image: %s\n", NO_CONNECT_FILE);
+	if(!(lp->curr_img = cvCreateMat(lp->fnc->height, lp->fnc->width, CV_8UC1)) ||
+			!(lp->prev_img = cvCreateMat(lp->curr_img->rows, lp->curr_img->cols, lp->curr_img->type)))
+	{
+		/* Create matrices for image comparison*/
+		warn("Can not create Matrices");
+		return -1;
+	}
 	return 0;
 }
 
@@ -89,6 +98,10 @@ static void cleanup(struct ldata *lp)
 		if_wfree(lp->wremote);
 	if (lp->wlocal)
 		if_wfree(lp->wlocal);
+	if(lp->curr_img)
+		if_wfree(lp->curr_img);
+	if(lp->prev_img)
+		if_wfree(lp->prev_img);
 }
 
 static int mainloop(struct ldata *lp)
