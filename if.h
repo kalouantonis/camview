@@ -12,6 +12,11 @@ typedef IplImage if_frame;
 typedef char if_window;
 typedef CvMat if_mat;
 
+extern double if_compare(if_mat *prev_img, if_mat *curr_img);
+extern void if_save_image(if_frame *frame, char* save_location);
+extern void if_convert_colour(if_frame *frame, if_mat *curr_img);
+extern void if_mfree(if_mat *mat);
+
 extern if_cam *if_caminit(void);
 extern if_frame *if_camquery(if_cam *handle, int width, int height); /* Use for capture from frame*/
 extern void if_camrelease(if_cam *handle);

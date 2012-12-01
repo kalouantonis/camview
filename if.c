@@ -1,6 +1,7 @@
 /* if.c*/
 #include <stdio.h>
 #include <string.h>
+#include <time.h> /* Files are saved according to time and date*/
 #include "config.h"
 #include "if.h"
 
@@ -98,6 +99,41 @@ void if_frelease(if_frame *frame)
 	cvReleaseImage(&ptr);
 }
 
+/* -------------------------------------------------------------------------- */
+double if_compare(if_mat *prev_img, if_mat *curr_img)
+{
+	double norm_L2 = cvNorm(prev_img, curr_img, CV_L2, NULL);
+	if(norm_L2 > 30000)
+		norm_L2 = 0; /* Bug with first run, solved by reseting to 0 */
+	if(norm_L2 > 3000)
+	{
+		return 1;
+	}
+	else
+		return 0;
+}
+
+void if_mfree(if_mat *mat)
+{
+	cvReleaseMat(&mat);
+}
+
+void if_convert_colour(if_frame *frame, if_mat *curr_img)
+{
+	cvCvtColor(frame, curr_img, CV_BGR2GRAY);
+}
+
+void if_save_image(if_frame *frame, char* save_location)
+{
+	time_t rawtime;
+	struct tm *timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	char location[255];
+	sprintf(location, "%s/%s.jpg", save_location, asctime(timeinfo));  
+	cvSaveImage(location, frame, 0); /* Images will be saved according to time and date*/
+}
 /* -------------------------------------------------------------------------- */
 
 static int key = -1;
