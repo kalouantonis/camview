@@ -52,8 +52,10 @@ struct ldata {
 	if_cam *cam;
 	if_window *wremote;
 	if_window *wlocal;
+	if_window *wdetect;
 	if_frame *fpending;
 	if_frame *fnc;
+	if_frame *detect;
 	if_mat *curr_img; /* Create the 2 comperative images*/
 	if_mat *prev_img;
 };
@@ -68,6 +70,10 @@ static int init(struct ldata *lp)
 		warn("unable to initialise local display");
 		return -1;
 	}
+	if (!(lp->wdetect = if_winit(DWINDOWNAME, FRAMEWIDTH, FRAMEHEIGHT))) {
+		warn("unable to initialise local display");
+		return -1;
+	}
 	if (!(lp->cam = if_caminit())) {
 		warn("unable to initialise camera");
 		return -1;
@@ -76,6 +82,7 @@ static int init(struct ldata *lp)
 		warn("unable to load image: %s\n", PENDING_FILE);
 	if (!(lp->fnc = if_fload(IMAGE_PATH NO_CONNECT_FILE)))
 		warn("unable to load image: %s\n", NO_CONNECT_FILE);
+		
 	if(!(lp->curr_img = cvCreateMat(lp->fnc->height, lp->fnc->width, CV_8UC1)) ||
 			!(lp->prev_img = cvCreateMat(lp->curr_img->rows, lp->curr_img->cols, lp->curr_img->type)))
 	{
@@ -92,16 +99,20 @@ static void cleanup(struct ldata *lp)
 		if_frelease(lp->fnc);
 	if (lp->fpending)
 		if_frelease(lp->fpending);
+	if(lp->detect)
+		if_frelease(lp->detect);
 	if (lp->cam)
 		if_camrelease(lp->cam);
 	if (lp->wremote)
 		if_wfree(lp->wremote);
 	if (lp->wlocal)
 		if_wfree(lp->wlocal);
+	if(lp->wdetect)
+		if_wfree(lp->wdetect);
 	if(lp->curr_img)
-		if_wfree(lp->curr_img);
+		if_mfree(lp->curr_img);
 	if(lp->prev_img)
-		if_wfree(lp->prev_img);
+		if_mfree(lp->prev_img);
 }
 
 static int mainloop(struct ldata *lp)
